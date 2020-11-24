@@ -1,0 +1,3 @@
++database fields should be written in underscore lisp-case
++final static fields should be written in upercase
++must create/use a field in Constants.java instead of hardcoded values when possible
