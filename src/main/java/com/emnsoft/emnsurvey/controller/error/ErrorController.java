@@ -14,7 +14,7 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
     private static final String PATH = "/error";
 
     @RequestMapping(PATH)
-    public ResponseEntity handleError(HttpServletRequest request) {
+    public ResponseEntity<Void> handleError(HttpServletRequest request) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         if(status != null) {
             HttpStatus st = HttpStatus.valueOf(Integer.valueOf(status.toString()));

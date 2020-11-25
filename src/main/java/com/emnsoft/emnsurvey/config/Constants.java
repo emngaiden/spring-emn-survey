@@ -22,5 +22,5 @@ public interface Constants {
     public static final String ADMIN_USER_LOGIN = "emngaiden";
     public static final String ADMIN_USER_PASSWORD = "123456789";
     public static final String ADMIN_USER_LANG_KEY = "en"; 
-    public static final User ADMIN_USER = new User(ADMIN_USER_ID, ADMIN_USER_FIRST_NAME, ADMIN_USER_LAST_NAME, ADMIN_USER_PASSWORD, ADMIN_USER_LOGIN, ADMIN_USER_EMAIL, ADMIN_USER_LANG_KEY);
+    public static final User ADMIN_USER = new User(ADMIN_USER_ID.toString(), ADMIN_USER_FIRST_NAME, ADMIN_USER_LAST_NAME, ADMIN_USER_PASSWORD, ADMIN_USER_LOGIN, ADMIN_USER_EMAIL, ADMIN_USER_LANG_KEY);
 }

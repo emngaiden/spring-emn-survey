@@ -7,7 +7,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,7 +17,7 @@ import com.emnsoft.emnsurvey.config.Constants;
 public class User {
 
     @Id
-    private ObjectId id;
+    private String id;
     
     @Field("first_name")
     @Size(max = 30)
@@ -46,7 +45,7 @@ public class User {
     @Field("lang_key")
     private String langKey;
 
-    public User(ObjectId id, String firstName, String lastName, String password, String login, String email, String langKey) {
+    public User(String id, String firstName, String lastName, String password, String login, String email, String langKey) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -80,11 +79,11 @@ public class User {
         return Objects.equals(this.id, other.id);
     }
     
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
