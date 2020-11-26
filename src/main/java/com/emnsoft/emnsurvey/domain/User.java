@@ -45,6 +45,8 @@ public class User {
     @Field("lang_key")
     private String langKey;
 
+    public User() {}
+
     public User(String id, String firstName, String lastName, String password, String login, String email, String langKey) {
         this.id = id;
         this.firstName = firstName;
