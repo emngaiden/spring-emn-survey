@@ -27,7 +27,9 @@ public class User {
     @Size(max = 30)
     private String lastName;
     
+    @Field("password")
     @JsonIgnore
+    @Size(min = Constants.A_TOKEN_LENGTH, max = Constants.A_TOKEN_LENGTH)
     private String password;
     
     @NotNull
@@ -44,6 +46,10 @@ public class User {
     @Size(min = 2, max = 2)
     @Field("lang_key")
     private String langKey;
+
+    @JsonIgnore
+    @Field("active")
+    private boolean active;
 
     public User() {}
 
@@ -135,5 +141,13 @@ public class User {
 
     public void setLangKey(String langKey) {
         this.langKey = langKey;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

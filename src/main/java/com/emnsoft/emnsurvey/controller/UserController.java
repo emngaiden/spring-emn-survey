@@ -1,7 +1,9 @@
 package com.emnsoft.emnsurvey.controller;
 
 import com.emnsoft.emnsurvey.domain.User;
+import com.emnsoft.emnsurvey.domain.dto.CreateUserDTO;
 import com.emnsoft.emnsurvey.repository.UserRepository;
+import com.emnsoft.emnsurvey.service.UserService;
 import com.emnsoft.emnsurvey.utils.ResponseEntityUtils;
 import java.util.List;
 
@@ -18,46 +20,44 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api")
 public class UserController {
     
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
     
-    @GetMapping("/{id}")
+    @GetMapping("/users/{id}")
     public ResponseEntity<User> getUser(@PathVariable String id) {
         return ResponseEntityUtils.wrapOrNotFound(userRepository.findById(id));
     }
 
-    @GetMapping("/list")
+    @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers() {
         List<User> users = userRepository.findAll();
         return ResponseEntity.ok().body(users);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        //validations
-        if (user.getId() != null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        User created = userRepository.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    @PostMapping("/users")
+    public ResponseEntity<User> createUser(@RequestBody CreateUserDTO user) {
+        return userService.createuser(user);
+        
     }
 
-    @PostMapping("/delete")
+    @PostMapping("/users/delete")
     public ResponseEntity<Void> deleteUser(@RequestParam String id){
         User user = getUser(id).getBody();
         userRepository.delete(user);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/update")
+    @PutMapping("/users")
     public ResponseEntity<User> updateUser(@RequestBody User user) {
         if(user.getId() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        User ret = userRepository.save(user);
-        return ResponseEntity.ok().body(ret);
+        return userService.updateUser(user);
     }
 }
