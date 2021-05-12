@@ -1,6 +1,8 @@
 package com.emnsoft.emnsurvey.service;
 
 import com.emnsoft.emnsurvey.repository.UserRepository;
+import com.emnsoft.emnsurvey.utils.CustomRequests;
+
 import java.util.Optional;
 
 import org.bson.types.ObjectId;
@@ -11,8 +13,9 @@ import org.springframework.stereotype.Service;
 import com.emnsoft.emnsurvey.domain.User;
 import com.emnsoft.emnsurvey.domain.dto.CreateUserDTO;
 
+
 @Service
-public class UserService {
+public class UserService extends BaseMongoTemplateService { 
     
     private final PasswordEncoder encoder;
 
@@ -21,6 +24,15 @@ public class UserService {
     public UserService(UserRepository userRepository, PasswordEncoder encoder){
         this.userRepository = userRepository;
         this.encoder = encoder;
+    }
+
+    public User getUserByLogin(String login) {
+        if(login == null || login.equals("")) {
+            return null;
+        }
+        Optional<User> o = CustomRequests.getUserByLogin(login, this.mongoTemplate);
+        if(!o.isPresent()) return null;
+        return o.get();
     }
 
     public ResponseEntity<User> updateUser(User user) {
