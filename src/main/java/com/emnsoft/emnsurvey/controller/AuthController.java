@@ -2,9 +2,11 @@ package com.emnsoft.emnsurvey.controller;
 
 import javax.validation.Valid;
 
+import com.emnsoft.emnsurvey.domain.dto.CreateUserDTO;
 import com.emnsoft.emnsurvey.domain.dto.UserLoginDTO;
 import com.emnsoft.emnsurvey.security.jwt.JwtTokenUtil;
 import com.emnsoft.emnsurvey.service.JwtUserDetailsService;
+import com.emnsoft.emnsurvey.service.UserService;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,9 @@ public class AuthController {
     @Autowired
     private JwtUserDetailsService jwtUserDetailsService;
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@Valid @RequestBody UserLoginDTO dto) {
         try {
@@ -51,6 +56,11 @@ public class AuthController {
         final UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(dto.getLogin());
         final String token = jwtTokenUtil.generateToken(userDetails.getUsername());
         return ResponseEntity.ok(new JWTToken(token));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody CreateUserDTO user) {
+        return userService.createuser(user);
     }
 
     private Authentication authenticate(String username, String password) throws DisabledException, BadCredentialsException {
@@ -69,10 +79,6 @@ public class AuthController {
         String getIdToken() {
             return idToken;
         }
-    
-        void setIdToken(String idToken) {
-            this.idToken = idToken;
-        }
     }
 
     private static class AuthenticationErrorResponse {
@@ -85,10 +91,6 @@ public class AuthController {
         @JsonProperty("message")
         String getMessage() {
             return message;
-        }
-
-        void setMessage(String message) {
-            this.message = message;
         }
     }
 }

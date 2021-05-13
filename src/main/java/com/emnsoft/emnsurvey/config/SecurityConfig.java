@@ -1,5 +1,6 @@
 package com.emnsoft.emnsurvey.config;
 
+import com.emnsoft.emnsurvey.config.Constants.IgnoredEndpoint;
 import com.emnsoft.emnsurvey.security.jwt.JwtAuthenticationEntryPoint;
 import com.emnsoft.emnsurvey.security.jwt.JwtRequestFilter;
 import com.emnsoft.emnsurvey.service.JwtUserDetailsService;
@@ -7,7 +8,6 @@ import com.emnsoft.emnsurvey.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -40,7 +40,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     }
 
     @Override public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(HttpMethod.POST, "/api/auth/authenticate");
+        for (IgnoredEndpoint IgnoredEndpoint : Constants.IGNORED_SECURITY_ENDPOINTS) {
+            web.ignoring().antMatchers(IgnoredEndpoint.getMethod(), IgnoredEndpoint.getEndpoint());
+        }
     }
     
     @Override

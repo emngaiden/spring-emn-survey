@@ -1,7 +1,6 @@
 package com.emnsoft.emnsurvey.controller;
 
 import com.emnsoft.emnsurvey.domain.User;
-import com.emnsoft.emnsurvey.domain.dto.CreateUserDTO;
 import com.emnsoft.emnsurvey.repository.UserRepository;
 import com.emnsoft.emnsurvey.service.UserService;
 import com.emnsoft.emnsurvey.utils.ResponseEntityUtils;
@@ -38,12 +37,6 @@ public class UserController {
     public ResponseEntity<List<User>> getUsers() {
         List<User> users = userRepository.findAll();
         return ResponseEntity.ok().body(users);
-    }
-
-    @PostMapping("/users")
-    public ResponseEntity<User> createUser(@RequestBody CreateUserDTO user) {
-        return userService.createuser(user);
-        
     }
 
     @PostMapping("/users/delete")
