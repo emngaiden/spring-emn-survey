@@ -14,7 +14,7 @@ public class CommunicationController {
     
 
     @PostMapping("/communication")
-    public ResponseEntity<Void> comunicate(@RequestBody BasicBSONObject comm) {
+    public ResponseEntity<Void> comunicate(@RequestBody String comm) {
         System.out.println(comm);
         return ResponseEntity.ok().build();
     }
